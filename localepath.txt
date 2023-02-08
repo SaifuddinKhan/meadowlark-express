@@ -1,0 +1,20 @@
+--Preexisiting windows default Context menu options--
+filesync
+90
+a2
+7z
+Notepad++
+DriveFS
+EPP
+ModernSharing
+Open with
+Open with Encryption
+Sharing
+WorkFolders
+--
+--Registry Key Details--
+Locale name : HKEY_CLASSES_ROOT\*\shellex\ContextMenuHandlers\{C52B9871-E5E9-41FD-B84D-C5ACADBEC7AE}
+Name : Default
+Type : REG_SZ
+Value Data : LocaleEmulator.LEContextMenuHandler Class
+--
