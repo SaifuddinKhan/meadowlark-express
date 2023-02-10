@@ -3,6 +3,8 @@ const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const port = process.env.PORT || 3000;
 
+console.log(`The port selected inside meadowlark.js is ${port}`);
+
 const handler = require('./lib/handlers');
 const app = express();
 
@@ -26,6 +28,10 @@ app.use(handler.notfound);
 
 app.use(handler.servererror);
 
-app.listen(port, () => {
-  console.log(`listening at ${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`listening at ${port}`);
+  });
+} else {
+  module.exports = app;
+}
