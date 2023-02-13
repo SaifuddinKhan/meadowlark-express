@@ -1,0 +1,14 @@
+{{#section 'head'}}
+<meta name="robots" content="no-index">
+{{/section}}
+
+{{#if headers}}
+<h1>HEADERS:</h1><br>
+<p>{{headers}}</p>
+{{/if}}
+<br>
+{{#section 'scripts'}}
+<script>
+    document.querySelector('body').insertAdjacentHTML('beforeEnd', '<small>(scripting works!)</small>')
+</script>
+{{/section}}

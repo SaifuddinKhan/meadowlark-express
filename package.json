@@ -4,7 +4,8 @@
   "description": "",
   "main": "meadowlark.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint meadowlark.js lib integration-tests"
   },
   "author": "",
   "license": "ISC",

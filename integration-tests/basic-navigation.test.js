@@ -8,7 +8,6 @@ let port = null;
 
 beforeEach(async () => {
   port = await portfinder.getPortPromise();
-  console.log(`Portfinder returned port as ${port}`);
   server = app.listen(port);
 });
 
