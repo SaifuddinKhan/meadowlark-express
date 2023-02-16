@@ -37,10 +37,10 @@
       return res.json();
     })
     .then(json => {
-      container.innerHTML = '<b>Thank you for signing up!</b>';
+      container.innerHTML = '<b>Server returned: </b> ' + json.result + '<br><b>Thank you for signing up!</b>';
     })
     .catch(err => {
-      container.innerHTML = '<b>Form submission failed ' + '<a href="/newsletter-signup-fetch">please try again</a>';
+      container.innerHTML = '<b>Form submission failed: ' + err.message + '<br> <a href="/newsletter-signup-fetch">please try again</a>';
     });
   });
 </script>
