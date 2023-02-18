@@ -43,6 +43,7 @@ app.get('/newsletter-signup-fetch', handler.newsletterSignupFetch);
 app.get('/newsletter-signup-thankyou', handler.newsletterSignupThankyou);
 app.get('/weather', handler.weatherPage);
 app.get('/contest/vacation-photo', handler.vacationPhotoContest);
+app.get('/contest/vacation-photo-fetch', handler.vacationPhotoContestFetch);
 
 app.post('/newsletter-signup/process', handler.newsletterSignupProcess);
 app.post('/api/newsletter-signup', handler.api.newsletterSignup);
@@ -53,6 +54,15 @@ app.post('/contest/vacation-photo/:year/:month', (req, res) => {
     console.log('got fields: ', fields);
     console.log('and files: ', files);
     handler.vacationPhotoContestProcess(req, res, fields, files);
+  });
+});
+app.post('/api/vacation-photo', (req, res) => {
+  const form = new multiparty.Form();
+  form.parse(req, (err, fields, files) => {
+    if (err) res.status(500).send('Error occured: ' + err.message);
+    console.log('got fields: ', fields);
+    console.log('and files: ', files);
+    handler.api.vacationPhotoContestProcess(req, res, fields, files);
   });
 });
 
