@@ -2,6 +2,7 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const path = require('path');
 const bodyParser = require('body-parser');
+const multiparty = require('multiparty');
 const port = process.env.PORT || 3000;
 
 const handler = require('./lib/handlers');
@@ -41,9 +42,19 @@ app.get('/newsletter-signup', handler.newsletterSignup);
 app.get('/newsletter-signup-fetch', handler.newsletterSignupFetch);
 app.get('/newsletter-signup-thankyou', handler.newsletterSignupThankyou);
 app.get('/weather', handler.weatherPage);
+app.get('/contest/vacation-photo', handler.vacationPhotoContest);
 
 app.post('/newsletter-signup/process', handler.newsletterSignupProcess);
 app.post('/api/newsletter-signup', handler.api.newsletterSignup);
+app.post('/contest/vacation-photo/:year/:month', (req, res) => {
+  const form = new multiparty.Form();
+  form.parse(req, (err, fields, files) => {
+    if (err) res.status(500).send('Error occured: ' + err.message);
+    console.log('got fields: ', fields);
+    console.log('and files: ', files);
+    handler.vacationPhotoContestProcess(req, res, fields, files);
+  });
+});
 
 app.use(handler.notfound);
 app.use(handler.servererror);
