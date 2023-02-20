@@ -3,10 +3,15 @@ const { engine } = require('express-handlebars');
 const path = require('path');
 const bodyParser = require('body-parser');
 const multiparty = require('multiparty');
-const port = process.env.PORT || 3000;
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
 
 const handler = require('./lib/handlers');
 const weathermiddle = require('./lib/weather.js');
+const flashmiddle = require('./lib/flash.js');
+const { credentials } = require('./config.js');
+
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -27,11 +32,19 @@ app.set('view engine', 'handlebars');
 app.set('view cache', true);
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser(credentials.cookieSecret));
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSecret
+}));
 app.use(weathermiddle);
+app.use(flashmiddle);
 
 app.get('/', handler.home);
 app.get('/about', handler.about);

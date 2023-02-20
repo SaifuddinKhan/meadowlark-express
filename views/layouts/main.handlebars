@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -8,8 +9,17 @@
     <link rel="icon" type="image/x-icon" href="/img/logo.png">
     <link rel="stylesheet" type="text/css" href="/public.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     {{{_sections.head}}}
+    {{#if flash}}
+    <div class="alert alert-{{flash.type}} alert-dismissible fade show" role="alert">
+        <strong>{{flash.intro}}</strong> {{{flash.message}}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
 </head>
+
 <body>
     <header>
         <img class="img1" src="/img/logo.png" alt="Meadowlark travel logo">
@@ -17,4 +27,5 @@
     {{{body}}}
     {{{_sections.scripts}}}
 </body>
+
 </html>
