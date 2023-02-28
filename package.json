@@ -5,7 +5,8 @@
   "main": "meadowlark.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint meadowlark.js lib integration-tests"
+    "lint": "eslint meadowlark.js lib integration-tests",
+    "stress": "artillery quick --count 10 -n 20 http://localhost:3000/"
   },
   "author": "",
   "license": "ISC",
@@ -24,12 +25,16 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "body-parser": "^1.20.1",
     "bootstrap": "^5.3.0-alpha1",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
-    "multiparty": "^4.2.3"
+    "mongoose": "^6.10.0",
+    "morgan": "^1.10.0",
+    "multiparty": "^4.2.3",
+    "nodemailer": "^6.9.1"
   }
 }
