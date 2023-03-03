@@ -12,7 +12,8 @@ const handler = require('./lib/handlers');
 const weathermiddle = require('./lib/weather.js');
 const flashmiddle = require('./lib/flash.js');
 const { credentials } = require('./config.js');
-require('./db.js');
+require('./db-mongo.js');
+require('./db-postgres.js');
 
 const port = process.env.PORT || 3000;
 
