@@ -18,7 +18,7 @@ db.on('error', (err) => {
 });
 
 db.once('open', () => {
-  console.log('Database connection established');
+  console.log('Connected to mongodb atlas');
 });
 
 Vacation.find((err, vacations) => {

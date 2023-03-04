@@ -5,13 +5,15 @@ const { engine } = require('express-handlebars');
 const bodyParser = require('body-parser');
 const multiparty = require('multiparty');
 const cookieParser = require('cookie-parser');
-const expressSession = require('express-session');
 const morgan = require('morgan');
+const expressSession = require('express-session');
+const { createClient } = require('redis');
+const RedisStore = require('connect-redis').default;
 
 const handler = require('./lib/handlers');
 const weathermiddle = require('./lib/weather.js');
 const flashmiddle = require('./lib/flash.js');
-const { credentials } = require('./config.js');
+const credentials = require('./.credentials.development.json');
 require('./db-mongo.js');
 require('./db-postgres.js');
 
@@ -49,6 +51,15 @@ switch (app.get('env')) {
     break;
   }
 }
+
+const redisClient = createClient({
+  url: credentials.redis.url
+});
+redisClient.on('error', err => console.log('Redis Client Error', err));
+redisClient.connect()
+  .then(() => { console.log('Connected to Redis Labs'); })
+  .catch(console.error);
+
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
@@ -59,7 +70,12 @@ app.use(cookieParser(credentials.cookieSecret));
 app.use(expressSession({
   resave: false,
   saveUninitialized: false,
-  secret: credentials.cookieSecret
+  secret: credentials.cookieSecret,
+  store: new RedisStore({
+    client: redisClient,
+    url: credentials.redis.url,
+    logErrors: true
+  })
 }));
 app.use(weathermiddle);
 app.use(flashmiddle);
@@ -80,8 +96,9 @@ app.get('/newsletter-signup-thankyou', handler.newsletterSignupThankyou);
 app.get('/weather', handler.weatherPage);
 app.get('/contest/vacation-photo', handler.vacationPhotoContest);
 app.get('/contest/vacation-photo-fetch', handler.vacationPhotoContestFetch);
-app.get('/vacations', handler.vacationList);
+app.get('/vacations', handler.listVacations);
 app.get('/notify-vacation-season', handler.notifyVacationSeason);
+app.get('/set-currency/:currency', handler.setCurrency);
 
 app.post('/newsletter-signup/process', handler.newsletterSignupProcess);
 app.post('/api/newsletter-signup', handler.api.newsletterSignup);
