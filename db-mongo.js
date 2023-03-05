@@ -9,6 +9,7 @@ if (!mongo.connectionString) {
   process.exit(1);
 }
 
+mongoose.set('strictQuery', true);
 mongoose.connect(mongo.connectionString);
 const db = mongoose.connection;
 

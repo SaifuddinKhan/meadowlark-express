@@ -21,6 +21,7 @@ const vacationSchema = mongoose.Schema({
   maximumGuests: Number,
   notes: String,
   packagesSold: Number
+//  requestedDeletions: Number
 });
 
 const Vacation = mongoose.model('Vacation', vacationSchema);

@@ -6,3 +6,6 @@ node_modules
 *.log
 data/
 test*.js
+.eslint*
+jest.config.*
+localepath.txt

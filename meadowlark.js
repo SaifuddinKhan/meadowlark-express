@@ -99,6 +99,8 @@ app.get('/contest/vacation-photo-fetch', handler.vacationPhotoContestFetch);
 app.get('/vacations', handler.listVacations);
 app.get('/notify-vacation-season', handler.notifyVacationSeason);
 app.get('/set-currency/:currency', handler.setCurrency);
+app.get('/api/vacations', handler.api.getVacationsApi);
+app.get('/api/vacations/:sku', handler.api.getVacationBySkuApi);
 
 app.post('/newsletter-signup/process', handler.newsletterSignupProcess);
 app.post('/api/newsletter-signup', handler.api.newsletterSignup);
@@ -121,6 +123,9 @@ app.post('/api/vacation-photo', (req, res) => {
   });
 });
 app.post('/notify-vacation-season-process', handler.api.notifyVacationSeasonProcess);
+app.post('/api/vacation/:sku/notify-when-in-season', handler.api.addVacationInSeasonListenerApi);
+
+app.delete('/api/vacation/:sku', handler.api.requestVacationDeleteApi);
 
 app.use(handler.notfound);
 app.use(handler.servererror);
