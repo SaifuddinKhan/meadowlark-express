@@ -1,0 +1,13 @@
+coverage/
+node_modules
+.credentials.*
+*~s
+*.env
+*.log
+data/
+test*.js
+.eslint*
+jest.config.*
+localepath.txt
+views/
+jest.config.json
